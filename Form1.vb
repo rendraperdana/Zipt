@@ -6,25 +6,18 @@ Public Class frmMain
     Public chrCharSet() As Char = {"A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")"}
 
     Private Sub btnGetFile_Click(sender As Object, e As EventArgs) Handles btnGetFile.Click
-        Try
-            dgvFileList.Rows.Clear()
-            dtList.Clear()
-            Call subGetFile()
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
+        dgvFileList.Rows.Clear()
+        dtList.Clear()
+        Call subGetFile()
     End Sub
 
     Private Sub btnZip_Click(sender As Object, e As EventArgs) Handles btnZip.Click
-        Try
-            Call subZipEncrypt()
-            Call SaveToCSV(Me.strAppPath & "PasswordPair.txt")
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
+        Call subZipEncrypt()
+        Call SaveToCSV(Me.strAppPath & "PasswordPair.txt")
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        dgvFileList.Columns.Add("clmNo", "No")
         dgvFileList.Columns.Add("clmFileList", "File Name")
         dgvFileList.Columns.Add("clmPassword", "Password")
         dtList.Columns.Add("FilePath")
@@ -82,9 +75,13 @@ Public Class frmMain
 
     Private Sub subGetFile()
         Dim strList() As String
+        Dim intNo As Integer = 0
+
         Try
+
             For Each foundFile As String In IO.Directory.GetFiles(strAppPath, "*.pdf", IO.SearchOption.TopDirectoryOnly)
-                strList = {foundFile, PasswordCreator()}
+                intNo += 1
+                strList = {intNo, foundFile, PasswordCreator()}
                 dtList.Rows.Add(strList)
                 dgvFileList.Rows.Add(strList)
             Next

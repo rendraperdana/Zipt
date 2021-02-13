@@ -9,6 +9,10 @@
     <MyType>WindowsForms</MyType>
     <Platforms>AnyCPU;x64</Platforms>
     <ApplicationIcon>blibli.ico</ApplicationIcon>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <Authors>Rendra Perdana (rendra.satria@gdn-commerce.com)</Authors>
+    <Company>PT Global Digital Niaga</Company>
+    <Description>Application to zip and encrypt *.pdf files</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,6 +30,9 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>false</DefineTrace>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

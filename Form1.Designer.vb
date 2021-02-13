@@ -30,6 +30,7 @@ Partial Class frmMain
         Me.Label1 = New System.Windows.Forms.Label()
         Me.gbFileList = New System.Windows.Forms.GroupBox()
         Me.lblFileCount = New System.Windows.Forms.Label()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvFileList, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbFileList.SuspendLayout()
@@ -84,7 +85,7 @@ Partial Class frmMain
         Me.gbFileList.Controls.Add(Me.lblFileCount)
         Me.gbFileList.Controls.Add(Me.Label1)
         Me.gbFileList.Controls.Add(Me.dgvFileList)
-        Me.gbFileList.Location = New System.Drawing.Point(12, 132)
+        Me.gbFileList.Location = New System.Drawing.Point(29, 246)
         Me.gbFileList.Name = "gbFileList"
         Me.gbFileList.Size = New System.Drawing.Size(1546, 846)
         Me.gbFileList.TabIndex = 2
@@ -103,7 +104,7 @@ Partial Class frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 32.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1570, 990)
+        Me.ClientSize = New System.Drawing.Size(1570, 1104)
         Me.Controls.Add(Me.gbFileList)
         Me.Controls.Add(Me.btnZip)
         Me.Controls.Add(Me.btnGetFile)
@@ -126,4 +127,5 @@ Partial Class frmMain
     Friend WithEvents Label1 As Label
     Friend WithEvents gbFileList As GroupBox
     Friend WithEvents lblFileCount As Label
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
 End Class

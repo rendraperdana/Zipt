@@ -20,6 +20,7 @@ Public Class frmMain
         dgvFileList.Columns.Add("clmNo", "No")
         dgvFileList.Columns.Add("clmFileList", "File Name")
         dgvFileList.Columns.Add("clmPassword", "Password")
+        dtList.Columns.Add("No")
         dtList.Columns.Add("FilePath")
         dtList.Columns.Add("Password")
     End Sub
@@ -48,9 +49,9 @@ Public Class frmMain
         Next
 
         For Each drListRow As DataRow In dtList.Rows
-            swWriter.Write(drListRow(0).ToString)
-            swWriter.Write(",")
             swWriter.Write(drListRow(1).ToString)
+            swWriter.Write(",")
+            swWriter.Write(drListRow(2).ToString)
             swWriter.WriteLine("")
         Next
 
@@ -62,11 +63,11 @@ Public Class frmMain
             For Each drFileList As DataRow In dtList.Rows
                 Dim zipFile As New Ionic.Zip.ZipFile
 
-                zipFile.Password = drFileList(1).ToString
+                zipFile.Password = drFileList(2).ToString
                 zipFile.Encryption = Ionic.Zip.EncryptionAlgorithm.WinZipAes128
                 zipFile.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed
-                zipFile.AddFile(drFileList(0).ToString, "")
-                zipFile.Save(drFileList(0).ToString + ".zip")
+                zipFile.AddFile(drFileList(1).ToString, "")
+                zipFile.Save(drFileList(1).ToString + ".zip")
             Next
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -75,8 +76,9 @@ Public Class frmMain
 
     Private Sub subGetFile()
         Dim strList() As String
-        Dim intNo As Integer = 0
+        Dim intNo As UInt32 = 0
 
+        IO.Directory.ge
         Try
 
             For Each foundFile As String In IO.Directory.GetFiles(strAppPath, "*.pdf", IO.SearchOption.TopDirectoryOnly)

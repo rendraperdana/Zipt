@@ -40,7 +40,7 @@ Partial Class frmMain
         '
         'btnGetFile
         '
-        Me.btnGetFile.Location = New System.Drawing.Point(573, 34)
+        Me.btnGetFile.Location = New System.Drawing.Point(547, 38)
         Me.btnGetFile.Name = "btnGetFile"
         Me.btnGetFile.Size = New System.Drawing.Size(237, 74)
         Me.btnGetFile.TabIndex = 0
@@ -49,7 +49,7 @@ Partial Class frmMain
         '
         'btnZip
         '
-        Me.btnZip.Location = New System.Drawing.Point(885, 34)
+        Me.btnZip.Location = New System.Drawing.Point(859, 38)
         Me.btnZip.Name = "btnZip"
         Me.btnZip.Size = New System.Drawing.Size(237, 74)
         Me.btnZip.TabIndex = 1
@@ -105,7 +105,7 @@ Partial Class frmMain
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(573, 166)
+        Me.Label2.Location = New System.Drawing.Point(547, 170)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(280, 32)
         Me.Label2.TabIndex = 3
@@ -113,7 +113,7 @@ Partial Class frmMain
         '
         'txtFile
         '
-        Me.txtFile.Location = New System.Drawing.Point(853, 166)
+        Me.txtFile.Location = New System.Drawing.Point(827, 170)
         Me.txtFile.Name = "txtFile"
         Me.txtFile.Size = New System.Drawing.Size(274, 39)
         Me.txtFile.TabIndex = 4
@@ -123,16 +123,17 @@ Partial Class frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 32.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1598, 1104)
+        Me.ClientSize = New System.Drawing.Size(1593, 1128)
         Me.Controls.Add(Me.txtFile)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.gbFileList)
         Me.Controls.Add(Me.btnZip)
         Me.Controls.Add(Me.btnGetFile)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Zip-and-Encrypt"
+        Me.Text = "Zip-and-Encrypt v1.0"
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvFileList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbFileList.ResumeLayout(False)

@@ -7,12 +7,13 @@ Public Class frmMain
 
     Private Sub btnGetFile_Click(sender As Object, e As EventArgs) Handles btnGetFile.Click
         dtList.Clear()
+        dtList.Dispose()
         Call subGetFile()
     End Sub
 
     Private Sub btnZip_Click(sender As Object, e As EventArgs) Handles btnZip.Click
         If MessageBox.Show("Process file: " & txtFile.Text & " ?", "Confirm", MessageBoxButtons.OKCancel) = DialogResult.OK Then
-            Call subZipEncrypt(Replace(txtFile.Text, "*", ""))
+            Call subZipEncrypt()
             Call SaveToCSV(Me.strAppPath & "PasswordPair.txt")
         End If
     End Sub
@@ -57,7 +58,7 @@ Public Class frmMain
         swWriter.Close()
     End Sub
 
-    Private Sub subZipEncrypt(strExtention As String)
+    Private Sub subZipEncrypt()
         Try
             For Each drFileList As DataRow In dtList.Rows
                 Dim zipFile As New Ionic.Zip.ZipFile
@@ -66,7 +67,8 @@ Public Class frmMain
                 zipFile.Encryption = Ionic.Zip.EncryptionAlgorithm.WinZipAes128
                 zipFile.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed
                 zipFile.AddFile(drFileList(1).ToString, "")
-                zipFile.Save(drFileList(1).ToString + strExtention)
+                zipFile.Save(drFileList(1).ToString + ".zip")
+                zipFile.Dispose()
             Next
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -80,6 +82,7 @@ Public Class frmMain
         Try
 
             dgvFileList.DataSource = ""
+
             For Each foundFile As String In IO.Directory.GetFiles(strAppPath, txtFile.Text, IO.SearchOption.TopDirectoryOnly)
                 intNo += 1
                 strList = {intNo, foundFile, PasswordCreator()}

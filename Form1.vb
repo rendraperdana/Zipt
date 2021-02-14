@@ -6,25 +6,22 @@ Public Class frmMain
     Public chrCharSet() As Char = {"A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")"}
 
     Private Sub btnGetFile_Click(sender As Object, e As EventArgs) Handles btnGetFile.Click
-        dgvFileList.Rows.Clear()
         dtList.Clear()
         Call subGetFile()
     End Sub
 
     Private Sub btnZip_Click(sender As Object, e As EventArgs) Handles btnZip.Click
         If MessageBox.Show("Process file: " & txtFile.Text & " ?", "Confirm", MessageBoxButtons.OKCancel) = DialogResult.OK Then
-            Call subZipEncrypt()
+            Call subZipEncrypt(Replace(txtFile.Text, "*", ""))
             Call SaveToCSV(Me.strAppPath & "PasswordPair.txt")
         End If
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        dgvFileList.Columns.Add("clmNo", "No")
-        dgvFileList.Columns.Add("clmFileList", "File Name")
-        dgvFileList.Columns.Add("clmPassword", "Password")
         dtList.Columns.Add("No")
-        dtList.Columns.Add("FilePath")
+        dtList.Columns.Add("File Path")
         dtList.Columns.Add("Password")
+        dgvFileList.DataSource = dtList
     End Sub
 
     Private Function PasswordCreator() As String
@@ -60,7 +57,7 @@ Public Class frmMain
         swWriter.Close()
     End Sub
 
-    Private Sub subZipEncrypt()
+    Private Sub subZipEncrypt(strExtention As String)
         Try
             For Each drFileList As DataRow In dtList.Rows
                 Dim zipFile As New Ionic.Zip.ZipFile
@@ -69,7 +66,7 @@ Public Class frmMain
                 zipFile.Encryption = Ionic.Zip.EncryptionAlgorithm.WinZipAes128
                 zipFile.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed
                 zipFile.AddFile(drFileList(1).ToString, "")
-                zipFile.Save(drFileList(1).ToString + txtFile.Text)
+                zipFile.Save(drFileList(1).ToString + strExtention)
             Next
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -82,13 +79,14 @@ Public Class frmMain
 
         Try
 
+            dgvFileList.DataSource = ""
             For Each foundFile As String In IO.Directory.GetFiles(strAppPath, txtFile.Text, IO.SearchOption.TopDirectoryOnly)
                 intNo += 1
                 strList = {intNo, foundFile, PasswordCreator()}
                 dtList.Rows.Add(strList)
-                dgvFileList.Rows.Add(strList)
             Next
 
+            dgvFileList.DataSource = dtList
             lblFileCount.Text = dtList.Rows.Count
         Catch ex As Exception
             MessageBox.Show(ex.Message)

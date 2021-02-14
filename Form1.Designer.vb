@@ -40,7 +40,7 @@ Partial Class frmMain
         '
         'btnGetFile
         '
-        Me.btnGetFile.Location = New System.Drawing.Point(511, 38)
+        Me.btnGetFile.Location = New System.Drawing.Point(573, 34)
         Me.btnGetFile.Name = "btnGetFile"
         Me.btnGetFile.Size = New System.Drawing.Size(237, 74)
         Me.btnGetFile.TabIndex = 0
@@ -49,7 +49,7 @@ Partial Class frmMain
         '
         'btnZip
         '
-        Me.btnZip.Location = New System.Drawing.Point(823, 38)
+        Me.btnZip.Location = New System.Drawing.Point(885, 34)
         Me.btnZip.Name = "btnZip"
         Me.btnZip.Size = New System.Drawing.Size(237, 74)
         Me.btnZip.TabIndex = 1
@@ -105,17 +105,17 @@ Partial Class frmMain
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(511, 170)
+        Me.Label2.Location = New System.Drawing.Point(573, 166)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(172, 32)
+        Me.Label2.Size = New System.Drawing.Size(280, 32)
         Me.Label2.TabIndex = 3
-        Me.Label2.Text = "File to process:"
+        Me.Label2.Text = "File extention to process:"
         '
         'txtFile
         '
-        Me.txtFile.Location = New System.Drawing.Point(689, 170)
+        Me.txtFile.Location = New System.Drawing.Point(853, 166)
         Me.txtFile.Name = "txtFile"
-        Me.txtFile.Size = New System.Drawing.Size(376, 39)
+        Me.txtFile.Size = New System.Drawing.Size(274, 39)
         Me.txtFile.TabIndex = 4
         Me.txtFile.Text = "*.pdf"
         '
@@ -123,7 +123,7 @@ Partial Class frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 32.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1570, 1104)
+        Me.ClientSize = New System.Drawing.Size(1598, 1104)
         Me.Controls.Add(Me.txtFile)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.gbFileList)

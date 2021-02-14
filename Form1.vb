@@ -6,15 +6,37 @@ Public Class frmMain
     Public chrCharSet() As Char = {"A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")"}
 
     Private Sub btnGetFile_Click(sender As Object, e As EventArgs) Handles btnGetFile.Click
+        Call ResetState()
+        Call subGetFile()
+        Call PrepareState()
+    End Sub
+
+    Private Sub ResetState()
         dtList.Clear()
         dtList.Dispose()
-        Call subGetFile()
+        gbInput.Enabled = True
+        lblFileCount.Text = "0"
+        lblFileProgress.Text = "0/0"
+        lblPercent.Text = "0%"
+        pbProcess.Value = 0
+        pbProcess.Minimum = 0
+        pbProcess.Maximum = 1
+    End Sub
+
+    Private Sub PrepareState()
+        lblFileCount.Text = dtList.Rows.Count
+        lblFileProgress.Text = "0/" & dtList.Rows.Count
+        lblPercent.Text = "0%"
+        pbProcess.Maximum = dtList.Rows.Count
+        pbProcess.Value = 0
     End Sub
 
     Private Sub btnZip_Click(sender As Object, e As EventArgs) Handles btnZip.Click
         If MessageBox.Show("Process file: " & txtFile.Text & " ?", "Confirm", MessageBoxButtons.OKCancel) = DialogResult.OK Then
+            gbInput.Enabled = False
             Call subZipEncrypt()
             Call SaveToCSV(Me.strAppPath & "PasswordPair.txt")
+            Call ResetState()
         End If
     End Sub
 
@@ -37,41 +59,58 @@ Public Class frmMain
     End Function
 
     Private Sub SaveToCSV(strFilePath As String)
-        Dim swWriter As New StreamWriter(strFilePath)
+        Dim swWriter As New StreamWriter(strFilePath, 0)
 
-        For i = 0 To dtList.Columns.Count - 1
-            swWriter.Write(dtList.Columns(i).ColumnName)
-            If i < dtList.Columns.Count - 1 Then
+        Try
+
+            For i = 0 To dtList.Columns.Count - 1
+                swWriter.Write(dtList.Columns(i).ColumnName)
+                If i < dtList.Columns.Count - 1 Then
+                    swWriter.Write(",")
+                Else
+                    swWriter.WriteLine("")
+                End If
+            Next
+
+            For Each drListRow As DataRow In dtList.Rows
+                swWriter.Write(drListRow(1).ToString)
                 swWriter.Write(",")
-            Else
+                swWriter.Write(drListRow(2).ToString)
                 swWriter.WriteLine("")
-            End If
-        Next
+            Next
 
-        For Each drListRow As DataRow In dtList.Rows
-            swWriter.Write(drListRow(1).ToString)
-            swWriter.Write(",")
-            swWriter.Write(drListRow(2).ToString)
-            swWriter.WriteLine("")
-        Next
+            swWriter.Close()
+            MessageBox.Show("Password file created in: " & strFilePath)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        Finally
+            swWriter.Dispose()
+            GC.Collect()
+        End Try
 
-        swWriter.Close()
     End Sub
 
     Private Sub subZipEncrypt()
+        Dim zipFile As New Ionic.Zip.ZipFile
+
         Try
             For Each drFileList As DataRow In dtList.Rows
-                Dim zipFile As New Ionic.Zip.ZipFile
 
                 zipFile.Password = drFileList(2).ToString
                 zipFile.Encryption = Ionic.Zip.EncryptionAlgorithm.WinZipAes128
                 zipFile.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed
                 zipFile.AddFile(drFileList(1).ToString, "")
                 zipFile.Save(drFileList(1).ToString + ".zip")
-                zipFile.Dispose()
+                pbProcess.PerformStep()
+                lblPercent.Text = FormatPercent(pbProcess.Value / pbProcess.Maximum, 0)
+                lblFileProgress.Text = "(" & pbProcess.Value & "/" & pbProcess.Maximum & ")"
+                Me.Refresh()
             Next
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+        Finally
+            zipFile.Dispose()
+            GC.Collect()
         End Try
     End Sub
 
@@ -80,7 +119,6 @@ Public Class frmMain
         Dim intNo As UInt32 = 0
 
         Try
-
             dgvFileList.DataSource = ""
 
             For Each foundFile As String In IO.Directory.GetFiles(strAppPath, txtFile.Text, IO.SearchOption.TopDirectoryOnly)
@@ -93,6 +131,8 @@ Public Class frmMain
             lblFileCount.Text = dtList.Rows.Count
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+        Finally
+            GC.Collect()
         End Try
     End Sub
 End Class

@@ -31,6 +31,8 @@ Partial Class frmMain
         Me.gbFileList = New System.Windows.Forms.GroupBox()
         Me.lblFileCount = New System.Windows.Forms.Label()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.txtFile = New System.Windows.Forms.TextBox()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvFileList, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbFileList.SuspendLayout()
@@ -100,11 +102,30 @@ Partial Class frmMain
         Me.lblFileCount.TabIndex = 3
         Me.lblFileCount.Text = "          "
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(511, 170)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(172, 32)
+        Me.Label2.TabIndex = 3
+        Me.Label2.Text = "File to process:"
+        '
+        'txtFile
+        '
+        Me.txtFile.Location = New System.Drawing.Point(689, 170)
+        Me.txtFile.Name = "txtFile"
+        Me.txtFile.Size = New System.Drawing.Size(376, 39)
+        Me.txtFile.TabIndex = 4
+        Me.txtFile.Text = "*.pdf"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 32.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1570, 1104)
+        Me.Controls.Add(Me.txtFile)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.gbFileList)
         Me.Controls.Add(Me.btnZip)
         Me.Controls.Add(Me.btnGetFile)
@@ -117,6 +138,7 @@ Partial Class frmMain
         Me.gbFileList.ResumeLayout(False)
         Me.gbFileList.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -128,4 +150,6 @@ Partial Class frmMain
     Friend WithEvents gbFileList As GroupBox
     Friend WithEvents lblFileCount As Label
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents Label2 As Label
+    Friend WithEvents txtFile As TextBox
 End Class

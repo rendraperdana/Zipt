@@ -12,8 +12,10 @@ Public Class frmMain
     End Sub
 
     Private Sub btnZip_Click(sender As Object, e As EventArgs) Handles btnZip.Click
-        Call subZipEncrypt()
-        Call SaveToCSV(Me.strAppPath & "PasswordPair.txt")
+        If MessageBox.Show("Process file: " & txtFile.Text & " ?", "Confirm", MessageBoxButtons.OKCancel) = DialogResult.OK Then
+            Call subZipEncrypt()
+            Call SaveToCSV(Me.strAppPath & "PasswordPair.txt")
+        End If
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -67,7 +69,7 @@ Public Class frmMain
                 zipFile.Encryption = Ionic.Zip.EncryptionAlgorithm.WinZipAes128
                 zipFile.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed
                 zipFile.AddFile(drFileList(1).ToString, "")
-                zipFile.Save(drFileList(1).ToString + ".zip")
+                zipFile.Save(drFileList(1).ToString + txtFile.Text)
             Next
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -78,10 +80,9 @@ Public Class frmMain
         Dim strList() As String
         Dim intNo As UInt32 = 0
 
-        IO.Directory.ge
         Try
 
-            For Each foundFile As String In IO.Directory.GetFiles(strAppPath, "*.pdf", IO.SearchOption.TopDirectoryOnly)
+            For Each foundFile As String In IO.Directory.GetFiles(strAppPath, txtFile.Text, IO.SearchOption.TopDirectoryOnly)
                 intNo += 1
                 strList = {intNo, foundFile, PasswordCreator()}
                 dtList.Rows.Add(strList)

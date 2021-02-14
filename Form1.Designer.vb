@@ -22,15 +22,12 @@ Partial Class frmMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Me.btnGetFile = New System.Windows.Forms.Button()
         Me.btnZip = New System.Windows.Forms.Button()
-        Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.dgvFileList = New System.Windows.Forms.DataGridView()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.gbFileList = New System.Windows.Forms.GroupBox()
         Me.lblFileCount = New System.Windows.Forms.Label()
-        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtFile = New System.Windows.Forms.TextBox()
         Me.pbProcess = New System.Windows.Forms.ProgressBar()
@@ -39,7 +36,7 @@ Partial Class frmMain
         Me.gbProgress = New System.Windows.Forms.GroupBox()
         Me.lblPercent = New System.Windows.Forms.Label()
         Me.gbInput = New System.Windows.Forms.GroupBox()
-        CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.bwWorker = New System.ComponentModel.BackgroundWorker()
         CType(Me.dgvFileList, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbFileList.SuspendLayout()
         Me.gbProgress.SuspendLayout()
@@ -69,17 +66,22 @@ Partial Class frmMain
         Me.dgvFileList.AllowUserToAddRows = False
         Me.dgvFileList.AllowUserToDeleteRows = False
         Me.dgvFileList.AllowUserToOrderColumns = True
+        Me.dgvFileList.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgvFileList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
         Me.dgvFileList.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells
         Me.dgvFileList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvFileList.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvFileList.Location = New System.Drawing.Point(3, 35)
+        Me.dgvFileList.Location = New System.Drawing.Point(12, 35)
+        Me.dgvFileList.MultiSelect = False
         Me.dgvFileList.Name = "dgvFileList"
         Me.dgvFileList.ReadOnly = True
         Me.dgvFileList.RowHeadersVisible = False
         Me.dgvFileList.RowHeadersWidth = 82
+        Me.dgvFileList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.dgvFileList.RowTemplate.Height = 41
-        Me.dgvFileList.Size = New System.Drawing.Size(1661, 898)
+        Me.dgvFileList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvFileList.Size = New System.Drawing.Size(1643, 817)
         Me.dgvFileList.TabIndex = 0
         '
         'Label1
@@ -93,11 +95,11 @@ Partial Class frmMain
         '
         'gbFileList
         '
-        Me.gbFileList.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.gbFileList.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.gbFileList.Controls.Add(Me.dgvFileList)
         Me.gbFileList.Location = New System.Drawing.Point(0, 322)
         Me.gbFileList.Name = "gbFileList"
-        Me.gbFileList.Size = New System.Drawing.Size(1667, 936)
+        Me.gbFileList.Size = New System.Drawing.Size(1667, 906)
         Me.gbFileList.TabIndex = 2
         Me.gbFileList.TabStop = False
         '
@@ -201,7 +203,6 @@ Partial Class frmMain
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Zip-and-Encrypt v1.0"
-        CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvFileList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbFileList.ResumeLayout(False)
         Me.gbProgress.ResumeLayout(False)
@@ -214,12 +215,10 @@ Partial Class frmMain
 
     Friend WithEvents btnGetFile As Button
     Friend WithEvents btnZip As Button
-    Friend WithEvents BindingSource1 As BindingSource
     Friend WithEvents dgvFileList As DataGridView
     Friend WithEvents Label1 As Label
     Friend WithEvents gbFileList As GroupBox
     Friend WithEvents lblFileCount As Label
-    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents Label2 As Label
     Friend WithEvents txtFile As TextBox
     Friend WithEvents pbProcess As ProgressBar
@@ -228,4 +227,5 @@ Partial Class frmMain
     Friend WithEvents gbProgress As GroupBox
     Friend WithEvents gbInput As GroupBox
     Friend WithEvents lblPercent As Label
+    Friend WithEvents bwWorker As System.ComponentModel.BackgroundWorker
 End Class

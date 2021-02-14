@@ -40,6 +40,10 @@ Public Class frmMain
         End If
     End Sub
 
+    Private Sub backgroundProcess() Handles bwWorker.DoWork
+
+    End Sub
+
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         dtList.Columns.Add("No")
         dtList.Columns.Add("File Path")
@@ -90,11 +94,39 @@ Public Class frmMain
 
     End Sub
 
+    Private Sub UpdatepbProcess(ByVal pb As ProgressBar)
+        If pb.InvokeRequired Then
+            pb.Invoke(New UpdatepbProcessInvoker(AddressOf UpdatepbProcess), pb)
+        Else
+            pbProcess.PerformStep()
+        End If
+    End Sub
+    Private Delegate Sub UpdatepbProcessInvoker(ByVal pb As ProgressBar)
+
+    Private Sub SetPercentText(ByVal text As String, ByVal lblpercent As Label)
+        If lblpercent.InvokeRequired Then
+            lblpercent.Invoke(New SetPercentTextInvoker(AddressOf SetPercentText), text, lblpercent)
+        Else
+            lblpercent.Text = text
+        End If
+    End Sub
+    Private Delegate Sub SetPercentTextInvoker(ByVal test As String, ByVal lblPercent As Label)
+
+    Private Sub SetFileProgressText(ByVal text As String, ByVal lblProgress As Label)
+        If lblProgress.InvokeRequired Then
+            lblProgress.Invoke(New SetFileProgressTextInvoker(AddressOf SetFileProgressText), text, lblProgress)
+        Else
+            lblProgress.Text = text
+        End If
+    End Sub
+    Private Delegate Sub SetFileProgressTextInvoker(ByVal text As String, ByVal lblProgress As Label)
+
     Private Sub subZipEncrypt()
-        Dim zipFile As New Ionic.Zip.ZipFile
+        'Strong object disposal and cleanup required here
 
         Try
             For Each drFileList As DataRow In dtList.Rows
+                Dim zipFile As New Ionic.Zip.ZipFile
 
                 zipFile.Password = drFileList(2).ToString
                 zipFile.Encryption = Ionic.Zip.EncryptionAlgorithm.WinZipAes128
@@ -105,11 +137,12 @@ Public Class frmMain
                 lblPercent.Text = FormatPercent(pbProcess.Value / pbProcess.Maximum, 0)
                 lblFileProgress.Text = "(" & pbProcess.Value & "/" & pbProcess.Maximum & ")"
                 Me.Refresh()
+                zipFile.Entries.Clear()
+                zipFile.Dispose()
             Next
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         Finally
-            zipFile.Dispose()
             GC.Collect()
         End Try
     End Sub

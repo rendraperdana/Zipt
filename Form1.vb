@@ -137,7 +137,6 @@ Public Class frmMain
                 lblPercent.Text = FormatPercent(pbProcess.Value / pbProcess.Maximum, 0)
                 lblFileProgress.Text = "(" & pbProcess.Value & "/" & pbProcess.Maximum & ")"
                 Me.Refresh()
-                zipFile.Entries.Clear()
                 zipFile.Dispose()
             Next
         Catch ex As Exception

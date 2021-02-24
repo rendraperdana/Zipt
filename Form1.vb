@@ -3,7 +3,7 @@ Imports System.Security.Cryptography
 Public Class frmMain
     Public strAppPath As String = Application.StartupPath.ToString
     Dim dtList As New DataTable
-    Public chrCharSet() As Char = {"A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")"}
+    Public chrCharSet() As Char = {"A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "$", "%", "^", "*", "(", ")"}
 
     Private Sub btnGetFile_Click(sender As Object, e As EventArgs) Handles btnGetFile.Click
         Call ResetState()

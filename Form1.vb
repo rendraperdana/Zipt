@@ -54,9 +54,10 @@ Public Class frmMain
     Private Function PasswordCreator() As String
         Dim rngSeed As New Random
         Dim strRandom As String = ""
+        Dim intCharset As Integer = chrCharSet.Length
 
         For i = 0 To 13 Step 1
-            strRandom &= chrCharSet(rngSeed.Next(1, chrCharSet.Length))
+            strRandom &= chrCharSet(rngSeed.Next(1, intCharset))
         Next
 
         Return strRandom

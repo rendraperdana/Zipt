@@ -205,7 +205,7 @@ Partial Class frmMain
         Me.MaximizeBox = False
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Zip-and-Encrypt v1.0.1"
+        Me.Text = "Zip-and-Encrypt v1.0.2"
         CType(Me.dgvFileList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbFileList.ResumeLayout(False)
         Me.gbProgress.ResumeLayout(False)

@@ -13,6 +13,7 @@
     <Authors>Rendra Perdana (rendra.satria@gdn-commerce.com)</Authors>
     <Company>PT Global Digital Niaga</Company>
     <Description>Application to zip and encrypt *.pdf files</Description>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -190,6 +190,9 @@ Partial Class frmMain
         Me.gbInput.TabIndex = 10
         Me.gbInput.TabStop = False
         '
+        'bwWorker
+        '
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 32.0!)
@@ -202,7 +205,7 @@ Partial Class frmMain
         Me.MaximizeBox = False
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Zip-and-Encrypt v1.0"
+        Me.Text = "Zip-and-Encrypt v1.0.1"
         CType(Me.dgvFileList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbFileList.ResumeLayout(False)
         Me.gbProgress.ResumeLayout(False)

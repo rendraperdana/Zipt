@@ -56,7 +56,7 @@ Public Class frmMain
         Dim strRandom As String = ""
 
         For i = 0 To 13 Step 1
-            strRandom &= chrCharSet(rngSeed.Next(1, 44))
+            strRandom &= chrCharSet(rngSeed.Next(1, chrCharSet.Length))
         Next
 
         Return strRandom
